@@ -1,0 +1,328 @@
+/* TOR Dice Roller — Svelte SPA styles.
+ *
+ * Palette + .fdie/.sdie classes are imported from the same un-tor
+ * Homebrewery template the OWUI Loremaster uses (homelab#240, #261),
+ * so dice faces rendered here look identical to the chat surface.
+ * Background-image PNGs live at un-tor.github.io/media/Symbol/.
+ *
+ * Font loading: direct @font-face from gstatic.com / un-tor CDN —
+ * @import via this CSS file works fine since this is served via
+ * standard <link> (no crossorigin=use-credentials clash like OWUI had).
+ */
+
+/* === Fonts (Aniron + InitialRing from un-tor CDN; Baskervville + Urbanist from Google) === */
+
+@font-face {
+  font-family: Aniron;
+  src: url(https://un-tor.github.io/media/Fonts/Aniron%20Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: InitialRing;
+  src: url(https://rawcdn.githack.com/lemtom/untor-media/refs/heads/main/Fonts/InitialRing.otf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/urbanist/v18/L0x-DF02iFML4hGCyMqlbS0.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Baskervville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/baskervville/v18/YA9Ur0yU4l_XOrogbkun3kQQtZmspPPZ9Mlt.woff2) format('woff2');
+}
+
+/* === Palette === */
+
+:root {
+  --tor-red:        #9A342F;
+  --tor-brown:      #614F3D;
+  --tor-darkbrown:  #573e2a;
+  --tor-golden:     rgba(190, 180, 160, 1);
+  --tor-background: #FEFCF4;
+  --tor-dark:       rgba(40, 37, 32, 1);
+  --tor-paper:      #faf5e8;
+  --tor-table-light: rgba(243, 239, 230, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--tor-background);
+  color: var(--tor-dark);
+  font-family: Baskervville, Georgia, Times, serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* === Layout === */
+
+#app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+h1 {
+  font-family: "Aniron", Georgia, serif;
+  color: var(--tor-red);
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 0.06em;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  text-align: center;
+  font-style: italic;
+  color: var(--tor-brown);
+  font-size: 14px;
+  margin: 0 0 24px;
+}
+
+.card {
+  background: white;
+  border: 2px solid var(--tor-red);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  box-shadow: inset 0 0 24px rgba(190, 180, 160, 0.18);
+}
+
+h2 {
+  font-family: "Aniron", Georgia, serif;
+  color: var(--tor-red);
+  font-size: 18px;
+  margin: 0 0 12px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--tor-golden);
+  letter-spacing: 0.04em;
+}
+
+/* === Tabs === */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--tor-golden);
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  font-family: Urbanist, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--tor-brown);
+  padding: 10px 4px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.tab:hover { color: var(--tor-red); }
+.tab.active {
+  color: var(--tor-red);
+  border-bottom-color: var(--tor-red);
+}
+
+/* === Form controls === */
+
+label {
+  display: block;
+  margin: 12px 0 4px;
+  font-family: Urbanist, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--tor-red);
+  letter-spacing: 0.04em;
+}
+
+input[type="number"], input[type="text"] {
+  width: 100%;
+  font-family: Baskervville, serif;
+  font-size: 16px;
+  padding: 8px 10px;
+  border: 1px solid var(--tor-golden);
+  border-radius: 3px;
+  background: var(--tor-paper);
+  color: var(--tor-dark);
+}
+input[type="number"]:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: var(--tor-red);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checks {
+  display: flex;
+  gap: 18px;
+  margin: 12px 0;
+}
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  text-transform: none;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--tor-brown);
+}
+.checks input[type="checkbox"] { margin: 0; accent-color: var(--tor-red); }
+
+button.roll {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--tor-red);
+  color: white;
+  font-family: "Aniron", Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+button.roll:hover { background: #b03c36; }
+button.roll:disabled { background: var(--tor-brown); opacity: 0.6; cursor: wait; }
+
+/* === Result panel === */
+
+.result {
+  font-size: 18px;
+  line-height: 1.6;
+  padding: 8px 0;
+}
+
+.result.success {
+  color: var(--tor-dark);
+}
+.result.failure {
+  color: var(--tor-brown);
+  font-style: italic;
+}
+.result-summary {
+  margin-top: 8px;
+  font-family: Urbanist, sans-serif;
+  font-size: 14px;
+  color: var(--tor-brown);
+}
+
+.error {
+  color: var(--tor-red);
+  font-style: italic;
+  padding: 10px;
+  border-left: 3px solid var(--tor-red);
+  background: rgba(154, 52, 47, 0.06);
+}
+
+/* === Dice face glyphs — same selectors as OWUI custom CSS === */
+
+[class^="inline-block fdie"],
+[class^="fdie"],
+[class^="sdie"] {
+  display: inline-block;
+  vertical-align: baseline;
+  background-size: auto 1.2em;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 1.6em;
+  height: 1.2em;
+  line-height: 1.2em;
+  margin: 0 2px;
+}
+
+.fdie1  { background-image: url(https://un-tor.github.io/media/Symbol/1.png); }
+.fdie2  { background-image: url(https://un-tor.github.io/media/Symbol/2.png); }
+.fdie3  { background-image: url(https://un-tor.github.io/media/Symbol/3.png); }
+.fdie4  { background-image: url(https://un-tor.github.io/media/Symbol/4.png); }
+.fdie5  { background-image: url(https://un-tor.github.io/media/Symbol/5.png); }
+.fdie6  { background-image: url(https://un-tor.github.io/media/Symbol/6.png); }
+.fdie7  { background-image: url(https://un-tor.github.io/media/Symbol/7.png); }
+.fdie8  { background-image: url(https://un-tor.github.io/media/Symbol/8.png); }
+.fdie9  { background-image: url(https://un-tor.github.io/media/Symbol/9.png); }
+.fdie10 { background-image: url(https://un-tor.github.io/media/Symbol/10.png); }
+.fdieeye, .fdie11 { background-image: url(https://un-tor.github.io/media/Symbol/eye.png); }
+.fdiegandalf, .fdie12 { background-image: url(https://un-tor.github.io/media/Symbol/rune.png); }
+
+.sdie1  { background-image: url(https://un-tor.github.io/media/Symbol/S1.png); }
+.sdie2  { background-image: url(https://un-tor.github.io/media/Symbol/S2.png); }
+.sdie3  { background-image: url(https://un-tor.github.io/media/Symbol/S3.png); }
+.sdie4  { background-image: url(https://un-tor.github.io/media/Symbol/S4.png); }
+.sdie5  { background-image: url(https://un-tor.github.io/media/Symbol/S5.png); }
+.sdie6  { background-image: url(https://un-tor.github.io/media/Symbol/S6.png); }
+
+/* === History === */
+
+.history {
+  font-family: Urbanist, sans-serif;
+  font-size: 14px;
+}
+.history-entry {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(190, 180, 160, 0.4);
+}
+.history-entry:last-child { border-bottom: none; }
+.history-entry .meta {
+  font-size: 12px;
+  color: var(--tor-brown);
+  margin-bottom: 2px;
+}
+.history-entry .body {
+  font-family: Baskervville, serif;
+}
+.history-empty {
+  color: var(--tor-brown);
+  font-style: italic;
+  text-align: center;
+  padding: 12px 0;
+}
+.history-clear {
+  background: none;
+  border: 1px solid var(--tor-golden);
+  color: var(--tor-brown);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: Urbanist, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;
+}
+.history-clear:hover { color: var(--tor-red); border-color: var(--tor-red); }
+
+/* === Mobile === */
+
+@media (max-width: 600px) {
+  #app { padding: 16px 12px 36px; }
+  h1 { font-size: 22px; }
+  h2 { font-size: 16px; }
+  .row { grid-template-columns: 1fr; }
+  .tab { font-size: 12px; padding: 8px 2px; }
+}

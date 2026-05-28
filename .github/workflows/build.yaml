@@ -109,3 +109,22 @@ jobs:
             VERSION=${{ github.sha }}
           cache-from: type=registry,ref=${{ env.INTERNAL_REGISTRY }}/${{ env.PROJECT }}/${{ env.IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.INTERNAL_REGISTRY }}/${{ env.PROJECT }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+
+      - name: Summary
+        run: |
+          echo "Built: ${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Release-action will cut a patch-bump GitHub release next," >> $GITHUB_STEP_SUMMARY
+          echo "which triggers docker-release.yaml to retag Harbor :dev as" >> $GITHUB_STEP_SUMMARY
+          echo ":X.Y.Z. image-updater (in dvystrcil/tor-dice) writes the" >> $GITHUB_STEP_SUMMARY
+          echo "new tag back to base/kustomization.yaml." >> $GITHUB_STEP_SUMMARY
+
+      - name: Create GitHub release
+        # Patch++ off the latest release; release-publish fires
+        # docker-release.yaml which retags Harbor :dev as :X.Y.Z (no v
+        # per canonical homelab style — see [[feedback_git_tag_vs_image_tag]]).
+        # ImageUpdater (in dvystrcil/tor-dice/image-updater/) picks it
+        # up and writes the new tag back to base/kustomization.yaml.
+        uses: dvystrcil/release-action@v0.1.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}

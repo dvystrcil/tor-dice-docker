@@ -1,2 +1,1 @@
-# Placeholder so //go:embed all:web/dist resolves before the Dockerfile
-# runs vite build. The actual Svelte build output replaces this.
+placeholder for //go:embed all:web/dist — replaced at Docker build time by vite output

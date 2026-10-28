@@ -131,6 +131,6 @@ jobs:
         # ImageUpdater (in dvystrcil/tor-dice/image-updater/) picks it
         # up and writes the new tag back to base/kustomization.yaml.
         if: github.event_name != 'workflow_dispatch' || inputs.release
-        uses: dvystrcil/release-action@v0.1.1
+        uses: dvystrcil/release-action@v0.2.1
         with:
           token: ${{ steps.app-token.outputs.token }}

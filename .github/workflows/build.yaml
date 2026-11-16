@@ -129,8 +129,8 @@ jobs:
         # Patch++ off the latest release; release-publish fires
         # docker-release.yaml which retags Harbor :dev as :X.Y.Z (no v
         # per canonical homelab style — see [[feedback_git_tag_vs_image_tag]]).
-        # ImageUpdater (in dvystrcil/tor-dice/image-updater/) picks it
-        # up and writes the new tag back to base/kustomization.yaml.
+        # docker-release.yaml's deploy job then commits the new tag to
+        # dvystrcil/tor-dice (release-action deploy step, homelab#2320).
         if: github.event_name != 'workflow_dispatch' || inputs.release
         uses: dvystrcil/release-action@v1
         with:

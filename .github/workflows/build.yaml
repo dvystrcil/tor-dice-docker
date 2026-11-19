@@ -32,7 +32,7 @@ env:
 
 jobs:
   test:
-    runs-on: tor-dice-docker-runner
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -41,8 +41,8 @@ jobs:
         with:
           go-version: '1.27'
       - name: go test
-        # No -race here: requires cgo, but our build is CGO_ENABLED=0
-        # for a static binary, and the ARC runner is alpine-without-gcc.
+        # No -race here: it requires cgo, but our build is CGO_ENABLED=0
+        # for a static binary.
         run: |
           # The //go:embed directive requires web/dist/ to exist. A
           # placeholder is checked into the repo; for `go test` we
